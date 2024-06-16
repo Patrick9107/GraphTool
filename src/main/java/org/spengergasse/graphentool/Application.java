@@ -29,13 +29,6 @@ public class Application extends javafx.application.Application {
         stage.show();
     }
 
-
-    private void newGraphEvent() {
-        Matrix matrix = new Matrix(4);
-        matrix.randomAdjacencyMatrix();
-        matrix.print();
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
