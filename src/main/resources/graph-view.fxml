@@ -38,36 +38,80 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.spengergasse.graphentool.GraphController">
-    <SplitPane dividerPositions="0.8" layoutX="-14.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="1080.0"
+    <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="1080.0"
                prefWidth="1751.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="graphArea" minHeight="0.0" minWidth="0.0" onMouseClicked="#newVertex" prefHeight="638.0"
                     prefWidth="1749.0">
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="1749.0"
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="2400.0"
                     xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-            <HBox prefHeight="166.0" prefWidth="1226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="CENTER">
-                <ButtonBar prefHeight="166.0" prefWidth="1226.0">
-                    <buttons>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#info" text="Info"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#printDistanceMatrix" text="Print Distance Matrix"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#autoLayout" text="Auto-Layout"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#clear" text="Clear"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#newRandomGraph" text="New Random Graph"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" onAction="#readGraph" text="Adjacency Matrix from Csv"/>
-                        <Button mnemonicParsing="false" prefHeight="114.0" text="Print Adjacency Matrix"
-                                onAction="#printGraph"/>
-                    </buttons>
-                    <opaqueInsets>
-                        <Insets/>
-                    </opaqueInsets>
-                </ButtonBar>
-            </HBox>
+            <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <VBox>
+                    <HBox prefHeight="166.0" prefWidth="1226.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="CENTER">
+                        <ButtonBar prefHeight="166.0" prefWidth="1226.0">
+                            <buttons>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#info" text="Calculate"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#printDistanceMatrix"
+                                        text="Print Distance Matrix"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#autoLayout"
+                                        text="Auto-Layout"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#clear" text="Clear"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#newRandomGraph"
+                                        text="New Random Graph"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#readGraph"
+                                        text="Adjacency Matrix from Csv"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" text="Print Adjacency Matrix"
+                                        onAction="#printGraph"/>
+                            </buttons>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                        </ButtonBar>
+                    </HBox>
+                    <TextArea fx:id="eccentricities" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="56.0" prefWidth="2400.0" text="Exzentrizitäten:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                    <TextArea fx:id="radius" editable="false" layoutY="56.0" prefHeight="56.0" prefWidth="2400.0" text="Radius:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                    <TextArea fx:id="center" editable="false" layoutY="174.0" prefHeight="56.0" prefWidth="2400.0" text="Zentrum:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                    <TextArea fx:id="diameter" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Durchmesser:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                    <TextArea fx:id="distanceMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Distanzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                    <TextArea fx:id="components" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Komponente:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
+                </VBox>
+            </ScrollPane>
         </AnchorPane>
     </SplitPane>
 </AnchorPane>

@@ -3,9 +3,7 @@ package org.spengergasse.graphentool;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Matrix {
 
@@ -78,7 +76,7 @@ public class Matrix {
         matrix.forEach(integers -> integers.add(0));
 
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < matrix.size()+1; i++) {
+        for (int i = 0; i < matrix.size() + 1; i++) {
             list.add(0);
         }
         matrix.add(list);
@@ -159,23 +157,115 @@ public class Matrix {
     public static List<List<Integer>> matrixMultiplication(List<List<Integer>> a, List<List<Integer>> b) {
         int size = a.size();
 
-        List<List<Integer>> C = new ArrayList<>();
+        List<List<Integer>> c = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             List<Integer> row = new ArrayList<>();
             for (int j = 0; j < size; j++) {
                 row.add(0);
             }
-            C.add(row);
+            c.add(row);
         }
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 for (int k = 0; k < size; k++) {
-                    C.get(i).set(j, C.get(i).get(j) + a.get(i).get(k) * b.get(k).get(j));
+                    c.get(i).set(j, c.get(i).get(j) + a.get(i).get(k) * b.get(k).get(j));
                 }
             }
         }
 
-        return C;
+        return c;
+    }
+
+    public static boolean noInfinity(Matrix matrix) {
+        return noInfinity(matrix.getMatrix());
+    }
+
+    public static boolean noInfinity(List<List<Integer>> matrix) {
+        for (List<Integer> row : matrix) {
+            for (Integer value : row) {
+                if (value.equals(Integer.MAX_VALUE)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean noZeros(Matrix matrix) {
+        return noZeros(matrix.getMatrix());
+    }
+
+    public static boolean noZeros(List<List<Integer>> matrix) {
+        for (List<Integer> row : matrix) {
+            for (Integer value : row) {
+                if (value.equals(0)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static String getEccentricitiesFromDistanceMatrix(Matrix distanceMatrix) {
+        return getEccentricitiesFromDistanceMatrix(distanceMatrix.getMatrix());
+    }
+
+    public static String getEccentricitiesFromDistanceMatrix(List<List<Integer>> distanceMatrix) {
+        StringBuilder sb = new StringBuilder();
+        int size = distanceMatrix.size();
+        Integer max = 0;
+        for (int i = 0; i < size; i++) {
+            max = distanceMatrix.get(i).get(0);
+            for (int j = 0; j < size; j++) {
+                Integer value = distanceMatrix.get(i).get(j);
+                if (i != j && value > max) {
+                    max = value;
+                }
+            }
+            sb.append((char) ('A' + i)).append(":").append(max).append("; ");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+    public static Map<String, Integer> getRadDmCenterFromDistanceMatrixWithMap(Matrix matrix) {
+        return getRadDmCenterFromDistanceMatrixWithMap(matrix.getMatrix());
+    }
+
+    public static Map<String, Integer> getRadDmCenterFromDistanceMatrixWithMap(List<List<Integer>> distanceMatrix) {
+        Map<String, Integer> map = new HashMap<>();
+        int size = distanceMatrix.size();
+        Integer maxPerRow;
+        for (int i = 0; i < size; i++) {
+            maxPerRow = distanceMatrix.get(i).get(0);
+            for (int j = 0; j < size; j++) {
+                Integer value = distanceMatrix.get(i).get(j);
+                if (i != j) {
+                    if (value > maxPerRow) {
+                        maxPerRow = value;
+                    }
+                }
+            }
+            map.put(String.valueOf((char) ('A' + i)), maxPerRow);
+        }
+        return map;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (List<Integer> row : matrix) {
+            for (Integer value : row) {
+                if (value.equals(Integer.MAX_VALUE)) {
+                    sb.append("∞").append("\t");
+                } else {
+                    sb.append(value).append("\t");
+                }
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }

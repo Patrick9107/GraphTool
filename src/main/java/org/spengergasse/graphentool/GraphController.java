@@ -1,16 +1,12 @@
 package org.spengergasse.graphentool;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -21,9 +17,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GraphController {
 
@@ -37,6 +32,23 @@ public class GraphController {
     public AnchorPane graphArea;
 
     private Stage primaryStage;
+
+    @FXML
+    public TextArea eccentricities;
+    @FXML
+    public TextArea radius;
+
+    @FXML
+    public TextArea diameter;
+
+    @FXML
+    public TextArea center;
+
+    @FXML
+    public TextArea distanceMatrix;
+
+    @FXML
+    public TextArea components;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -224,28 +236,8 @@ public class GraphController {
 
     @FXML
     public void info() {
-        Stage newWindow = new Stage();
-
-        Button backButton = new Button("Close");
-        backButton.setPrefSize( 330, 114);
-        backButton.setOnAction(event -> newWindow.close());
-
-//        prefHeight="638.0"
-//        prefWidth="1749.0">
-        newWindow.setHeight(640);
-        newWindow.setWidth(1780);
-        StackPane secondaryLayout = new StackPane(backButton);
-        secondaryLayout.setAlignment(Pos.BOTTOM_CENTER);
-        secondaryLayout.setPadding(new Insets(0, 0, 30, 0));
-        Scene secondScene = new Scene(secondaryLayout, 300, 200);
-
-        newWindow.setTitle("Graph Info");
-        newWindow.setScene(secondScene);
-
-        newWindow.setX(primaryStage.getX() + 200);
-        newWindow.setY(primaryStage.getY() + 100);
-
-        newWindow.show();
+        calculateEccentricitiesDiameterCenter();
+        components();
     }
 
     @FXML
@@ -268,5 +260,59 @@ public class GraphController {
     @FXML
     public void autoLayout() {
         drawGraph();
+    }
+
+    private void calculateEccentricitiesDiameterCenter() {
+        Matrix distanceMatrix = graph.calculateDistanceMatrix();
+        this.distanceMatrix.setText("Distanzmatrix:" + System.lineSeparator() + distanceMatrix.toString());
+        if (Matrix.noInfinity(distanceMatrix)) {
+            this.eccentricities.setText("Exzentrizitäten: " + Matrix.getEccentricitiesFromDistanceMatrix(distanceMatrix));
+            Map<String, Integer> map = Matrix.getRadDmCenterFromDistanceMatrixWithMap(distanceMatrix);
+            map.values().stream().mapToInt(Integer::intValue).min().ifPresent(value -> this.radius.setText("Radius: rad(G)=" + value));
+            this.center.setText(getCenterFromMap(map));
+            map.values().stream().mapToInt(Integer::intValue).max().ifPresent(value -> this.diameter.setText("Durchmesser: dm(G)=" + value));
+        } else {
+            this.eccentricities.setText("Exzentrizitäten: Graph nicht zusammenhängend");
+            this.radius.setText("Radius: Graph nicht zusammenhängend");
+            this.center.setText("Zentrum: Graph nicht zusammenhängend");
+            this.diameter.setText("Durchmesser: Graph nicht zusammenhängend");
+        }
+    }
+
+    private String getCenterFromMap(Map<String, Integer> map) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Zentrum: Z(G)={");
+
+        int minValue = map.values()
+                .stream()
+                .min(Integer::compare)
+                .orElseThrow();
+
+        map.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == minValue)
+                .map(Map.Entry::getKey)
+                .forEach(s -> sb.append(s).append(", "));
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("}");
+        return sb.toString();
+    }
+
+    @FXML
+    public void components() {
+        List<List<String>> components = graph.componentSearch(graph.calculatePathMatrix());
+        StringBuilder sb = new StringBuilder();
+        for (List<String> component : components) {
+            sb.append("{");
+            for (String s : component) {
+                sb.append(s).append(",");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append("}, ");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length()-1);
+        this.components.setText("Komponente: " + sb);
     }
 }
