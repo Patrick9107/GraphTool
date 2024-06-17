@@ -214,7 +214,7 @@ public class Matrix {
     public static String getEccentricitiesFromDistanceMatrix(List<List<Integer>> distanceMatrix) {
         StringBuilder sb = new StringBuilder();
         int size = distanceMatrix.size();
-        Integer max = 0;
+        Integer max;
         for (int i = 0; i < size; i++) {
             max = distanceMatrix.get(i).get(0);
             for (int j = 0; j < size; j++) {
@@ -242,10 +242,8 @@ public class Matrix {
             maxPerRow = distanceMatrix.get(i).get(0);
             for (int j = 0; j < size; j++) {
                 Integer value = distanceMatrix.get(i).get(j);
-                if (i != j) {
-                    if (value > maxPerRow) {
+                if (i != j && value > maxPerRow) {
                         maxPerRow = value;
-                    }
                 }
             }
             map.put(String.valueOf((char) ('A' + i)), maxPerRow);

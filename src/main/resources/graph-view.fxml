@@ -62,9 +62,7 @@
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="CENTER">
                         <ButtonBar prefHeight="166.0" prefWidth="1226.0">
                             <buttons>
-                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#info" text="Calculate"/>
-                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#printDistanceMatrix"
-                                        text="Print Distance Matrix"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#calculate" text="Calculate"/>
                                 <Button mnemonicParsing="false" prefHeight="114.0" onAction="#autoLayout"
                                         text="Auto-Layout"/>
                                 <Button mnemonicParsing="false" prefHeight="114.0" onAction="#clear" text="Clear"/>
@@ -100,12 +98,17 @@
                             <Font size="18.0" />
                         </font>
                     </TextArea>
+                    <TextArea fx:id="components" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Komponente:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
                     <TextArea fx:id="distanceMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Distanzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </TextArea>
-                    <TextArea fx:id="components" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Komponente:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="adjacencyMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Adjazenzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
                             <Font size="18.0" />
                         </font>

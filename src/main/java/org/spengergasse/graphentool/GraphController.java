@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GraphController {
 
@@ -49,6 +48,9 @@ public class GraphController {
 
     @FXML
     public TextArea components;
+
+    @FXML
+    public TextArea adjacencyMatrix;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -206,11 +208,6 @@ public class GraphController {
     }
 
     @FXML
-    public void printDistanceMatrix() {
-        graph.calculateDistanceMatrix().printWithLabel();
-    }
-
-    @FXML
     public void readGraph() {
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(null);
@@ -235,9 +232,10 @@ public class GraphController {
     }
 
     @FXML
-    public void info() {
-        calculateEccentricitiesDiameterCenter();
+    public void calculate() {
+        calculateEccentricitiesRadiusDiameterCenter();
         components();
+        printAdjacencyMatrix();
     }
 
     @FXML
@@ -262,7 +260,7 @@ public class GraphController {
         drawGraph();
     }
 
-    private void calculateEccentricitiesDiameterCenter() {
+    private void calculateEccentricitiesRadiusDiameterCenter() {
         Matrix distanceMatrix = graph.calculateDistanceMatrix();
         this.distanceMatrix.setText("Distanzmatrix:" + System.lineSeparator() + distanceMatrix.toString());
         if (Matrix.noInfinity(distanceMatrix)) {
@@ -314,5 +312,9 @@ public class GraphController {
         sb.deleteCharAt(sb.length()-1);
         sb.deleteCharAt(sb.length()-1);
         this.components.setText("Komponente: " + sb);
+    }
+
+    public void printAdjacencyMatrix() {
+        this.adjacencyMatrix.setText("Adjazenzmatrix:" + System.lineSeparator() + graph.getMatrix().toString());
     }
 }

@@ -72,7 +72,7 @@ public class Graph {
     public Matrix calculatePathMatrix() {
         List<List<Integer>> adjacencyMatrix = matrix.getMatrix();
         int size = adjacencyMatrix.size();
-        Matrix pathMatrix = new Matrix(adjacencyMatrix);
+        Matrix pathMatrix = new Matrix(Matrix.createCopy(adjacencyMatrix));
         List<List<Integer>> pathMatrixAsList = pathMatrix.getMatrix();
 
         for (int i = 0; i < adjacencyMatrix.size(); i++) {
@@ -115,6 +115,7 @@ public class Graph {
 
     public List<List<String>> componentSearch(List<List<Integer>> pathMatrix) {
         List<List<String>> components = new ArrayList<>();
+        pathMatrix = Matrix.createCopy(pathMatrix);
         int size = pathMatrix.size();
 
         for (int i = 0; i < size; i++) {
