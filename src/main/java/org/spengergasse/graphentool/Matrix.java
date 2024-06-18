@@ -83,7 +83,7 @@ public class Matrix {
     }
 
     public boolean addEdge(int v, int v1) {
-        if (v < matrix.size() && v1 < matrix.size() && v != v1) {
+        if (v < matrix.size() && v1 < matrix.size() && v != v1 && matrix.get(v).get(v1).equals(0) && matrix.get(v1).get(v).equals(0)) {
             matrix.get(v).set(v1, 1);
             matrix.get(v1).set(v, 1);
             return true;
@@ -225,8 +225,8 @@ public class Matrix {
             }
             sb.append((char) ('A' + i)).append(":").append(max).append("; ");
         }
-        sb.deleteCharAt(sb.length()-1);
-        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
@@ -243,7 +243,7 @@ public class Matrix {
             for (int j = 0; j < size; j++) {
                 Integer value = distanceMatrix.get(i).get(j);
                 if (i != j && value > maxPerRow) {
-                        maxPerRow = value;
+                    maxPerRow = value;
                 }
             }
             map.put(String.valueOf((char) ('A' + i)), maxPerRow);

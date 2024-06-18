@@ -79,13 +79,11 @@ public class GraphController {
             event.consume();
             if (selected == null) {
                 selected = group;
-                circle.setFill(Color.BLACK);
-                circle.setOpacity(0.5);
+                circle.setFill(Color.LIGHTGRAY);
             } else {
                 if (group == selected) {
                     selected = null;
                     circle.setFill(Color.WHITE);
-                    circle.setOpacity(1);
                 } else {
                     newEdge(event);
                 }
@@ -122,7 +120,6 @@ public class GraphController {
 
             selected = null;
             circle1.setFill(Color.WHITE);
-            circle1.setOpacity(1);
 
             graphArea.getChildren().add(0, line);
         }
@@ -154,14 +151,9 @@ public class GraphController {
 //        });
 //    }
 
-    private static class Delta {
-        double x, y;
-    }
-
-    @FXML
-    public void printGraph() {
-        graph.getMatrix().printWithLabel();
-    }
+//    private static class Delta {
+//        double x, y;
+//    }
 
     @FXML
     public void newRandomGraph() {
@@ -204,7 +196,7 @@ public class GraphController {
                     line.setStartY(circle1.getLayoutY());
                     line.setEndX(circle2.getLayoutX());
                     line.setEndY(circle2.getLayoutY());
-                    graphArea.getChildren().add(0, line);
+                    graphArea.getChildren().addFirst(line);
                 }
             }
         }
@@ -295,8 +287,7 @@ public class GraphController {
                 .filter(entry -> entry.getValue() == minValue)
                 .map(Map.Entry::getKey)
                 .forEach(s -> sb.append(s).append(","));
-        sb.deleteCharAt(sb.length()-1);
-        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length() - 1);
         sb.append("}");
         return sb.toString();
     }
@@ -304,26 +295,29 @@ public class GraphController {
     public void articulations() {
         List<String> articulations = graph.calculateArticulations();
         StringBuilder sb = new StringBuilder("Artikulationen: {");
-        articulations.forEach(s -> sb.append(s).append(","));
-        sb.deleteCharAt(sb.length()-1);
+        if (!articulations.isEmpty()) {
+            articulations.forEach(s -> sb.append(s).append(","));
+            sb.deleteCharAt(sb.length() - 1);
+        }
         sb.append("}");
         this.articulations.setText(sb.toString());
     }
 
     @FXML
     public void components() {
-        List<List<String>> components = graph.componentSearch(graph.calculatePathMatrix(graph.getMatrix()));
+        Map<String, List<String>> map = graph.findComponents(graph.calculatePathMatrix(graph.getMatrix()));
+        List<List<String>> components = map.values().stream().toList();
         StringBuilder sb = new StringBuilder();
         for (List<String> component : components) {
             sb.append("{");
             for (String s : component) {
                 sb.append(s).append(",");
             }
-            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length() - 1);
             sb.append("}, ");
         }
-        sb.deleteCharAt(sb.length()-1);
-        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
         this.components.setText("Komponente: " + sb);
     }
 

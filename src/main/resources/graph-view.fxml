@@ -59,10 +59,11 @@
                 <VBox>
                     <HBox prefHeight="166.0" prefWidth="1226.0" AnchorPane.bottomAnchor="0.0"
                           AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="CENTER">
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="BOTTOM_LEFT">
                         <ButtonBar prefHeight="166.0" prefWidth="1226.0">
                             <buttons>
-                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#calculate" text="Calculate"/>
+                                <Button mnemonicParsing="false" prefHeight="114.0" onAction="#calculate"
+                                        text="Calculate"/>
                                 <Button mnemonicParsing="false" prefHeight="114.0" onAction="#autoLayout"
                                         text="Auto-Layout"/>
                                 <Button mnemonicParsing="false" prefHeight="114.0" onAction="#clear" text="Clear"/>
@@ -70,52 +71,62 @@
                                         text="New Random Graph"/>
                                 <Button mnemonicParsing="false" prefHeight="114.0" onAction="#readGraph"
                                         text="Adjacency Matrix from Csv"/>
-                                <Button mnemonicParsing="false" prefHeight="114.0" text="Print Adjacency Matrix"
-                                        onAction="#printGraph"/>
                             </buttons>
                             <opaqueInsets>
                                 <Insets/>
                             </opaqueInsets>
                         </ButtonBar>
                     </HBox>
-                    <TextArea fx:id="eccentricities" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="56.0" prefWidth="2400.0" text="Exzentrizitäten:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <TextArea fx:id="eccentricities" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="56.0"
+                              prefWidth="2400.0" text="Exzentrizitäten:" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="radius" editable="false" layoutY="56.0" prefHeight="56.0" prefWidth="2400.0" text="Radius:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="radius" editable="false" layoutY="56.0" prefHeight="56.0" prefWidth="2400.0"
+                              text="Radius:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="center" editable="false" layoutY="174.0" prefHeight="56.0" prefWidth="2400.0" text="Zentrum:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="center" editable="false" layoutY="174.0" prefHeight="56.0" prefWidth="2400.0"
+                              text="Zentrum:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="diameter" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Durchmesser:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="diameter" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0"
+                              text="Durchmesser:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="components" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Komponente:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="components" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0"
+                              text="Komponente:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="articulations" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Artikulationen:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="articulations" editable="false" layoutY="115.0" prefHeight="56.0"
+                              prefWidth="2400.0" text="Artikulationen:" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="distanceMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Distanzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="distanceMatrix" editable="false" layoutY="233.0" prefHeight="423.0"
+                              prefWidth="2400.0" text="Distanzmatrix:&#10;" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
-                    <TextArea fx:id="adjacencyMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Adjazenzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <TextArea fx:id="adjacencyMatrix" editable="false" layoutY="233.0" prefHeight="423.0"
+                              prefWidth="2400.0" text="Adjazenzmatrix:&#10;" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0">
                         <font>
-                            <Font size="18.0" />
+                            <Font size="18.0"/>
                         </font>
                     </TextArea>
                 </VBox>

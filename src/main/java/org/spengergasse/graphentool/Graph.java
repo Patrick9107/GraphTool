@@ -109,45 +109,29 @@ public class Graph {
         return pathMatrix;
     }
 
-    public List<List<String>> componentSearch(Matrix pathMatrix) {
-        return componentSearch(pathMatrix.getMatrix());
+    public Map<String, List<String>> findComponents(Matrix pathMatrix) {
+        return findComponents(pathMatrix.getMatrix());
     }
 
-    public List<List<String>> componentSearch(List<List<Integer>> pathMatrix) {
-        List<List<String>> components = new ArrayList<>();
-        pathMatrix = Matrix.createCopy(pathMatrix);
-        int size = pathMatrix.size();
+    public Map<String, List<String>> findComponents(List<List<Integer>> pathMatrix) {
+        int n = pathMatrix.size();
+        Map<String, List<String>> componentMap = new HashMap<>();
 
-        for (int i = 0; i < size; i++) {
-            ArrayList<String> newComponent = new ArrayList<>();
-            for (int j = 0; j < size; j++) {
-                if (pathMatrix.get(i).get(j).equals(1)) {
-                    newComponent.add(String.valueOf((char) ('A' + j)));
-                }
+        for (int i = 0; i < n; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                sb.append(pathMatrix.get(i).get(j));
             }
-            if (!newComponent.isEmpty()) {
-                boolean visited = true;
-                Iterator<List<String>> iterator = components.iterator();
-                while (iterator.hasNext()) {
-                    List<String> component = iterator.next();
-                    if (new HashSet<>(component).containsAll(newComponent)) {
-                        visited = false;
-                        break;
-                    }
-                    if (new HashSet<>(newComponent).containsAll(component)) {
-                        iterator.remove();
-                    }
-                }
-                if (visited) {
-                    components.add(newComponent);
-                }
-            }
+            String row = sb.toString();
+            componentMap.putIfAbsent(row, new ArrayList<>());
+            componentMap.get(row).add(String.valueOf((char) ('A' + i)));
         }
-        return components;
+
+        return componentMap;
     }
 
     public List<String> calculateArticulations() {
-        int componentCount = componentSearch(calculatePathMatrix(matrix)).size();
+        int componentCount = findComponents(calculatePathMatrix(matrix)).size();
         List<String> articulationPoints = new ArrayList<>();
         int size = matrix.getMatrix().size();
         List<List<Integer>> adjacencyMatrixList = matrix.getMatrix();
@@ -159,9 +143,9 @@ public class Graph {
                 adjacencyMatrixCopy.get(i).set(j, 0);
                 adjacencyMatrixCopy.get(j).set(i, 0);
             }
-            int componentCountWithVertexRemoved = componentSearch(calculatePathMatrix(adjacencyMatrixCopy)).size();
+            int componentCountWithVertexRemoved = findComponents(calculatePathMatrix(adjacencyMatrixCopy)).size();
 
-            if (componentCountWithVertexRemoved-1 > componentCount) {
+            if (componentCountWithVertexRemoved - 1 > componentCount) {
                 articulationPoints.add(String.valueOf((char) ('A' + i)));
             }
 
