@@ -1,9 +1,6 @@
 package org.spengergasse.graphentool;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Graph {
 
@@ -69,14 +66,17 @@ public class Graph {
         return distanceMatrix;
     }
 
-    public Matrix calculatePathMatrix() {
-        List<List<Integer>> adjacencyMatrix = matrix.getMatrix();
+    public Matrix calculatePathMatrix(Matrix adjacencyMatrix) {
+        return calculatePathMatrix(adjacencyMatrix.getMatrix());
+    }
+
+    public Matrix calculatePathMatrix(List<List<Integer>> adjacencyMatrix) {
         int size = adjacencyMatrix.size();
         Matrix pathMatrix = new Matrix(Matrix.createCopy(adjacencyMatrix));
         List<List<Integer>> pathMatrixAsList = pathMatrix.getMatrix();
 
-        for (int i = 0; i < adjacencyMatrix.size(); i++) {
-            for (int j = 0; j < adjacencyMatrix.get(i).size(); j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 if (i == j) {
                     pathMatrixAsList.get(i).set(j, 1);
                 }
@@ -109,8 +109,8 @@ public class Graph {
         return pathMatrix;
     }
 
-    public List<List<String>> componentSearch(Matrix matrix) {
-        return componentSearch(matrix.getMatrix());
+    public List<List<String>> componentSearch(Matrix pathMatrix) {
+        return componentSearch(pathMatrix.getMatrix());
     }
 
     public List<List<String>> componentSearch(List<List<Integer>> pathMatrix) {
@@ -144,6 +144,30 @@ public class Graph {
             }
         }
         return components;
+    }
+
+    public List<String> calculateArticulations() {
+        int componentCount = componentSearch(calculatePathMatrix(matrix)).size();
+        List<String> articulationPoints = new ArrayList<>();
+        int size = matrix.getMatrix().size();
+        List<List<Integer>> adjacencyMatrixList = matrix.getMatrix();
+
+        for (int i = 0; i < size; i++) {
+            List<List<Integer>> adjacencyMatrixCopy = Matrix.createCopy(adjacencyMatrixList);
+
+            for (int j = 0; j < size; j++) {
+                adjacencyMatrixCopy.get(i).set(j, 0);
+                adjacencyMatrixCopy.get(j).set(i, 0);
+            }
+            int componentCountWithVertexRemoved = componentSearch(calculatePathMatrix(adjacencyMatrixCopy)).size();
+
+            if (componentCountWithVertexRemoved-1 > componentCount) {
+                articulationPoints.add(String.valueOf((char) ('A' + i)));
+            }
+
+        }
+
+        return articulationPoints;
     }
 
     private static boolean isEqual(List<List<Integer>> a, List<List<Integer>> b) {

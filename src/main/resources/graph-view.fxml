@@ -103,6 +103,11 @@
                             <Font size="18.0" />
                         </font>
                     </TextArea>
+                    <TextArea fx:id="articulations" editable="false" layoutY="115.0" prefHeight="56.0" prefWidth="2400.0" text="Artikulationen:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </TextArea>
                     <TextArea fx:id="distanceMatrix" editable="false" layoutY="233.0" prefHeight="423.0" prefWidth="2400.0" text="Distanzmatrix:&#10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <font>
                             <Font size="18.0" />

@@ -52,6 +52,9 @@ public class GraphController {
     @FXML
     public TextArea adjacencyMatrix;
 
+    @FXML
+    public TextArea articulations;
+
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -236,6 +239,7 @@ public class GraphController {
         calculateEccentricitiesRadiusDiameterCenter();
         components();
         printAdjacencyMatrix();
+        articulations();
     }
 
     @FXML
@@ -290,16 +294,25 @@ public class GraphController {
                 .stream()
                 .filter(entry -> entry.getValue() == minValue)
                 .map(Map.Entry::getKey)
-                .forEach(s -> sb.append(s).append(", "));
+                .forEach(s -> sb.append(s).append(","));
         sb.deleteCharAt(sb.length()-1);
         sb.deleteCharAt(sb.length()-1);
         sb.append("}");
         return sb.toString();
     }
 
+    public void articulations() {
+        List<String> articulations = graph.calculateArticulations();
+        StringBuilder sb = new StringBuilder("Artikulationen: {");
+        articulations.forEach(s -> sb.append(s).append(","));
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("}");
+        this.articulations.setText(sb.toString());
+    }
+
     @FXML
     public void components() {
-        List<List<String>> components = graph.componentSearch(graph.calculatePathMatrix());
+        List<List<String>> components = graph.componentSearch(graph.calculatePathMatrix(graph.getMatrix()));
         StringBuilder sb = new StringBuilder();
         for (List<String> component : components) {
             sb.append("{");
